@@ -1,0 +1,222 @@
+{
+  "elegant": [
+    {
+      "src": "assets/elegant-1.jpg",
+      "thumb": "assets/elegant-1-small.jpg",
+      "label": "Элегантный – пример 1"
+    },
+    {
+      "src": "assets/elegant-2.jpg",
+      "thumb": "assets/elegant-2-small.jpg",
+      "label": "Элегантный – пример 2"
+    },
+    {
+      "src": "assets/elegant-3.jpg",
+      "thumb": "assets/elegant-3-small.jpg",
+      "label": "Элегантный – пример 3"
+    },
+    {
+      "src": "assets/elegant-4.jpg",
+      "thumb": "assets/elegant-4-small.jpg",
+      "label": "Элегантный – пример 4"
+    }
+  ],
+  "art": [
+    {
+      "src": "assets/art-1.jpg",
+      "thumb": "assets/art-1-small.jpg",
+      "label": "Арт-дизайн – пример 1"
+    },
+    {
+      "src": "assets/art-2.jpg",
+      "thumb": "assets/art-2-small.jpg",
+      "label": "Арт-дизайн – пример 2"
+    },
+    {
+      "src": "assets/art-3.jpg",
+      "thumb": "assets/art-3-small.jpg",
+      "label": "Арт-дизайн – пример 3"
+    },
+    {
+      "src": "assets/art-4.jpg",
+      "thumb": "assets/art-4-small.jpg",
+      "label": "Арт-дизайн – пример 4"
+    }
+  ],
+  "minimal": [
+    {
+      "src": "assets/minimal-1.jpg",
+      "thumb": "assets/minimal-1-small.jpg",
+      "label": "Минимализм – пример 1"
+    },
+    {
+      "src": "assets/minimal-2.jpg",
+      "thumb": "assets/minimal-2-small.jpg",
+      "label": "Минимализм – пример 2"
+    },
+    {
+      "src": "assets/minimal-3.jpg",
+      "thumb": "assets/minimal-3-small.jpg",
+      "label": "Минимализм – пример 3"
+    },
+    {
+      "src": "assets/minimal-4.jpg",
+      "thumb": "assets/minimal-4-small.jpg",
+      "label": "Минимализм – пример 4"
+    }
+  ],
+  "editorial": [
+    {
+      "src": "assets/editorial-1.jpg",
+      "thumb": "assets/editorial-1-small.jpg",
+      "label": "Журнальный – пример 1"
+    },
+    {
+      "src": "assets/editorial-2.jpg",
+      "thumb": "assets/editorial-2-small.jpg",
+      "label": "Журнальный – пример 2"
+    },
+    {
+      "src": "assets/editorial-3.jpg",
+      "thumb": "assets/editorial-3-small.jpg",
+      "label": "Журнальный – пример 3"
+    },
+    {
+      "src": "assets/editorial-4.jpg",
+      "thumb": "assets/editorial-4-small.jpg",
+      "label": "Журнальный – пример 4"
+    }
+  ],
+  "classic": [
+    {
+      "src": "assets/classic-1.jpg",
+      "thumb": "assets/classic-1-small.jpg",
+      "label": "Классический – пример 1"
+    },
+    {
+      "src": "assets/classic-2.jpg",
+      "thumb": "assets/classic-2-small.jpg",
+      "label": "Классический – пример 2"
+    },
+    {
+      "src": "assets/classic-3.jpg",
+      "thumb": "assets/classic-3-small.jpg",
+      "label": "Классический – пример 3"
+    },
+    {
+      "src": "assets/classic-4.jpg",
+      "thumb": "assets/classic-4-small.jpg",
+      "label": "Классический – пример 4"
+    }
+  ],
+  "romantic": [
+    {
+      "src": "assets/romantic-1.jpg",
+      "thumb": "assets/romantic-1-small.jpg",
+      "label": "Романтический – пример 1"
+    },
+    {
+      "src": "assets/romantic-2.jpg",
+      "thumb": "assets/romantic-2-small.jpg",
+      "label": "Романтический – пример 2"
+    },
+    {
+      "src": "assets/romantic-3.jpg",
+      "thumb": "assets/romantic-3-small.jpg",
+      "label": "Романтический – пример 3"
+    },
+    {
+      "src": "assets/romantic-4.jpg",
+      "thumb": "assets/romantic-4-small.jpg",
+      "label": "Романтический – пример 4"
+    }
+  ],
+  "natural": [
+    {
+      "src": "assets/natural-1.jpg",
+      "thumb": "assets/natural-1-small.jpg",
+      "label": "Натуральный – пример 1"
+    },
+    {
+      "src": "assets/natural-2.jpg",
+      "thumb": "assets/natural-2-small.jpg",
+      "label": "Натуральный – пример 2"
+    },
+    {
+      "src": "assets/natural-3.jpg",
+      "thumb": "assets/natural-3-small.jpg",
+      "label": "Натуральный – пример 3"
+    },
+    {
+      "src": "assets/natural-4.jpg",
+      "thumb": "assets/natural-4-small.jpg",
+      "label": "Натуральный – пример 4"
+    }
+  ],
+  "botanical": [
+    {
+      "src": "assets/botanical-1.jpg",
+      "thumb": "assets/botanical-1-small.jpg",
+      "label": "Ботанический – пример 1"
+    },
+    {
+      "src": "assets/botanical-2.jpg",
+      "thumb": "assets/botanical-2-small.jpg",
+      "label": "Ботанический – пример 2"
+    },
+    {
+      "src": "assets/botanical-3.jpg",
+      "thumb": "assets/botanical-3-small.jpg",
+      "label": "Ботанический – пример 3"
+    },
+    {
+      "src": "assets/botanical-4.jpg",
+      "thumb": "assets/botanical-4-small.jpg",
+      "label": "Ботанический – пример 4"
+    }
+  ],
+  "premium": [
+    {
+      "src": "assets/premium-1.jpg",
+      "thumb": "assets/premium-1-small.jpg",
+      "label": "Премиальный – пример 1"
+    },
+    {
+      "src": "assets/premium-2.jpg",
+      "thumb": "assets/premium-2-small.jpg",
+      "label": "Премиальный – пример 2"
+    },
+    {
+      "src": "assets/premium-3.jpg",
+      "thumb": "assets/premium-3-small.jpg",
+      "label": "Премиальный – пример 3"
+    },
+    {
+      "src": "assets/premium-4.jpg",
+      "thumb": "assets/premium-4-small.jpg",
+      "label": "Премиальный – пример 4"
+    }
+  ],
+  "bright": [
+    {
+      "src": "assets/bright-1.jpg",
+      "thumb": "assets/bright-1-small.jpg",
+      "label": "Яркий – пример 1"
+    },
+    {
+      "src": "assets/bright-2.jpg",
+      "thumb": "assets/bright-2-small.jpg",
+      "label": "Яркий – пример 2"
+    },
+    {
+      "src": "assets/bright-3.jpg",
+      "thumb": "assets/bright-3-small.jpg",
+      "label": "Яркий – пример 3"
+    },
+    {
+      "src": "assets/bright-4.jpg",
+      "thumb": "assets/bright-4-small.jpg",
+      "label": "Яркий – пример 4"
+    }
+  ]
+}
