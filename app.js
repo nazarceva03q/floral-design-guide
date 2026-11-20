@@ -18,6 +18,7 @@ try{
     state.selected=Array.isArray(saved.selected)?saved.selected.filter(id=>typeof id==='string'&&getSite(id)):[];
     state.step=Math.max(0,Math.min(8,Number.isInteger(saved.step)?saved.step:0));
     state.completed=saved.completed===true;
+    state.selectionBarDismissed=saved.selectionBarDismissed===true;
     state.quizInProgress=saved.quizInProgress===true||(!state.completed&&state.answers.some(a=>a.values.length||a.custom));
     state.photos=Array.isArray(saved.photos)?[...new Set(saved.photos)].filter(id=>typeof id==='string'&&/^[a-z]+:[0-3]$/.test(id)&&styles.some(s=>s.id===id.split(':')[0])):[];
     state.highlighted=styles.some(s=>s.id===saved.highlighted)?saved.highlighted:null;
@@ -35,20 +36,24 @@ function photoButton(id,extra=''){const yes=state.photos.includes(id);return `<b
 function togglePhoto(id){if(!photoInfo(id))return;const yes=state.photos.includes(id);state.photos=state.photos.filter(x=>x!==id);if(!yes)state.photos.push(id);save();updateSelection();if($('#choice-dialog').open)renderSelection();toast(yes?'Фото убрано из выбора':'Фото добавлено в ваш выбор');}
 function highlightStyle(slug){if(!styles.some(s=>s.id===slug))return;state.highlighted=slug;document.querySelectorAll('.style-card').forEach(card=>card.classList.toggle('is-highlighted',card.id==='style-'+slug));document.querySelectorAll('[data-style-link]').forEach(link=>{if(link.dataset.styleLink===slug)link.setAttribute('aria-current','true');else link.removeAttribute('aria-current');});save();}
 
-const revealedStyles=new Set();
+const revealedPhotos=new Set();
 let revealObserver;
 function revealCards(){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   if(!revealObserver)revealObserver=new IntersectionObserver(entries=>{
     entries.filter(e=>e.isIntersecting).forEach((entry,i)=>{
-      const el=entry.target;el.style.setProperty('--deal-delay',Math.min(i,3)*110+'ms');
-      el.classList.add('is-dealt');revealedStyles.add(el.id);revealObserver.unobserve(el);
+      const el=entry.target;el.style.setProperty('--deal-delay',Math.min(i,3)*90+'ms');
+      el.classList.add('is-dealt');revealedPhotos.add(el.dataset.dealKey);revealObserver.unobserve(el);
     });
-  },{threshold:0.08});
-  document.querySelectorAll('.style-card:not([data-deal])').forEach((el,i)=>{
-    el.dataset.deal='true';if(revealedStyles.has(el.id))return;
-    el.classList.add('deal-card');el.style.setProperty('--deal-side',i%2?'1':'-1');
-    revealObserver.observe(el);
+  },{threshold:0.15});
+  document.querySelectorAll('.style-card').forEach((card,i)=>{
+    card.querySelectorAll('.reference-main-wrap,.thumbnail-wrap').forEach((el,n)=>{
+      if(el.dataset.dealKey)return;
+      const key=card.id+':'+n;el.dataset.dealKey=key;
+      if(revealedPhotos.has(key))return;
+      el.classList.add('deal-photo');el.style.setProperty('--deal-side',i%2?'1':'-1');
+      revealObserver.observe(el);
+    });
   });
 }
 function toast(text){const el=$('#toast');el.textContent=text;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),4500);}
@@ -57,7 +62,7 @@ function updateSelection(){
   revealCards();
   const sites=selectedSites().length,photos=state.photos.length,count=sites+photos;
   const header=$('.selection-nav');header.classList.toggle('has-favorites',count>0);header.setAttribute('aria-label',count?'Мой выбор, есть сохранённые примеры':'Мой выбор');
-  $('#selection-bar').hidden=!count||state.view==='quiz';$('#bar-count').textContent='Ваши любимые примеры';
+  $('#selection-bar').hidden=!count||state.view==='quiz'||state.selectionBarDismissed===true;$('#bar-count').textContent='Ваши любимые примеры';
   $('#resume-quiz').hidden=!state.quizInProgress||state.view==='quiz';
   document.querySelectorAll('[data-pick]').forEach(b=>{const yes=isSelected(b.dataset.pick);b.setAttribute('aria-pressed',String(yes));b.innerHTML=heart();const name=getSite(b.dataset.pick)?.name||'сайт';b.setAttribute('aria-label',`${yes?'Убрать':'Добавить'} ${name} ${yes?'из':'в'} мой выбор`);b.title=yes?'Убрать из моего выбора':'Добавить в мой выбор';});
   document.querySelectorAll('[data-photo-pick]').forEach(b=>{const yes=state.photos.includes(b.dataset.photoPick);b.setAttribute('aria-pressed',String(yes));b.setAttribute('aria-label',`${yes?'Убрать фото из':'Добавить фото в'} избранное`);b.title=yes?'Убрать из моего выбора':'Добавить в мой выбор';});
@@ -94,7 +99,7 @@ document.addEventListener('click',e=>{
  if(action==='start'){if(state.completed&&!state.quizInProgress){state.answers=[];state.step=0;state.completed=false;}renderQuiz();}
  else if(action==='resume')renderQuiz();
  else if(action==='catalog')goCatalog();
- else if(action==='selection')openSelection();
+ else if(action==='selection'){if(e.target.closest('#selection-bar')){state.selectionBarDismissed=true;save();updateSelection();}openSelection();}
  else if(action==='close-selection')$('#choice-dialog').close();
  else if(action==='close-image')$('#image-dialog').close();
  else if(action==='prev-image'&&imageContext)openImage(imageContext.slug,imageContext.index-1);
