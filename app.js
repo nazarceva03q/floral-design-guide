@@ -56,14 +56,28 @@ function revealCards(){
     });
   });
 }
+let contentObserver;
+function revealContent(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(!contentObserver)contentObserver=new IntersectionObserver(entries=>{
+    entries.filter(e=>e.isIntersecting).forEach((entry,i)=>{
+      entry.target.style.setProperty('--content-delay',Math.min(i,3)*80+'ms');
+      entry.target.classList.add('content-visible');contentObserver.unobserve(entry.target);
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('#main h1,#main h2,#main h3,#main p,#main .hero-actions,#main .style-nav,#main .option,#main .quiz-actions,#main .sites-details,.footer').forEach(el=>{
+    if(el.dataset.motion)return;el.dataset.motion='true';el.classList.add('content-reveal');contentObserver.observe(el);
+  });
+}
 function toast(text){const el=$('#toast');el.textContent=text;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),4500);}
 function focusMain(){requestAnimationFrame(()=>{const target=$('#main h1')||$('#main h2')||$('#main');target.setAttribute('tabindex','-1');target.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});});}
 function updateSelection(){
   revealCards();
+  revealContent();
   const sites=selectedSites().length,photos=state.photos.length,count=sites+photos;
   const header=$('.selection-nav');header.classList.toggle('has-favorites',count>0);header.setAttribute('aria-label',count?'Мой выбор, есть сохранённые примеры':'Мой выбор');
   $('#selection-bar').hidden=!count||state.view==='quiz'||state.selectionBarDismissed===true;$('#bar-count').textContent='Ваши любимые примеры';
-  $('#resume-quiz').hidden=!state.quizInProgress||state.view==='quiz';
+
   document.querySelectorAll('[data-pick]').forEach(b=>{const yes=isSelected(b.dataset.pick);b.setAttribute('aria-pressed',String(yes));b.innerHTML=heart();const name=getSite(b.dataset.pick)?.name||'сайт';b.setAttribute('aria-label',`${yes?'Убрать':'Добавить'} ${name} ${yes?'из':'в'} мой выбор`);b.title=yes?'Убрать из моего выбора':'Добавить в мой выбор';});
   document.querySelectorAll('[data-photo-pick]').forEach(b=>{const yes=state.photos.includes(b.dataset.photoPick);b.setAttribute('aria-pressed',String(yes));b.setAttribute('aria-label',`${yes?'Убрать фото из':'Добавить фото в'} избранное`);b.title=yes?'Убрать из моего выбора':'Добавить в мой выбор';});
 }
@@ -117,6 +131,18 @@ document.addEventListener('click',e=>{
 document.addEventListener('submit',e=>{if(e.target.id==='quiz-form'){e.preventDefault();submit();}});
 document.addEventListener('change',e=>{if(e.target.name!=='answer')return;const q=questions[state.step],a=answer();const raw=e.target.value,v=/^\d+$/.test(raw)?Number(raw):raw;if(q.multiple){let values=[...document.querySelectorAll('input[name=answer]:checked')].map(x=>/^\d+$/.test(x.value)?Number(x.value):x.value);if(v==='unknown'||v==='custom'||v===6){values=e.target.checked?[v]:[];}else values=values.filter(x=>x!=='unknown'&&x!=='custom'&&x!==6);a.values=values;document.querySelectorAll('input[name=answer]').forEach(x=>{const val=/^\d+$/.test(x.value)?Number(x.value):x.value;x.checked=values.includes(val);});}else a.values=[v];$('#custom-field').hidden=!a.values.includes('custom');$('#form-error').textContent='';save();if(a.values.includes('custom'))$('#custom-answer').focus();});
 document.addEventListener('input',e=>{if(e.target.id==='custom-answer'){answer().custom=e.target.value;const counter=$('#char-count');if(counter)counter.textContent=e.target.value.length;save();}});
+let swipeStart=null;
+const swipeArea=$('#large-image');
+swipeArea.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse'||!matchMedia('(max-width:1024px)').matches)return;
+  swipeStart={x:e.clientX,y:e.clientY,id:e.pointerId};swipeArea.setPointerCapture(e.pointerId);
+});
+swipeArea.addEventListener('pointerup',e=>{
+  if(!swipeStart||swipeStart.id!==e.pointerId)return;
+  const dx=e.clientX-swipeStart.x,dy=e.clientY-swipeStart.y;swipeStart=null;
+  if(Math.abs(dx)>=45&&Math.abs(dx)>Math.abs(dy)*1.3&&imageContext)openImage(imageContext.slug,imageContext.index+(dx<0?1:-1));
+});
+swipeArea.addEventListener('pointercancel',()=>{swipeStart=null;});
 $('#image-dialog').addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();openImage(imageContext.slug,imageContext.index-1);}if(e.key==='ArrowRight'){e.preventDefault();openImage(imageContext.slug,imageContext.index+1);}});
 for(const dialog of document.querySelectorAll('dialog'))dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
 
