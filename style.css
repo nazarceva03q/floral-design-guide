@@ -22,6 +22,7 @@
 @media(max-width:700px){.intro-next{display:block;margin-top:12px}.style-card{border-bottom-color:var(--line);padding-bottom:30px;border-radius:0}.style-card.is-highlighted{border-radius:8px}.quiz-actions{gap:10px}.quiz-actions .button{font-size:16px;padding:10px 16px;min-height:44px}.final-actions .button[type=submit]{margin-left:0;font-size:15px;padding:10px 16px}.image-dialog{width:100%;max-width:100%;margin-inline:0;border-inline:0;border-radius:0;padding:10px 0}.image-dialog .dialog-top,.image-dialog .caption{padding-inline:12px}.image-dialog .dialog-top p{font-size:15px}.gallery-stage{padding-top:52px}.gallery-stage>.photo-heart{right:8px}.gallery-arrow.previous{left:8px}#large-image{width:100%;height:auto;max-height:68dvh;object-fit:contain}.image-bottom{margin-top:12px}.image-dialog .caption{margin-top:12px}.footer-roses{width:64px;height:77px}}
 .gallery-arrow.next{right:0}.gallery-stage>.photo-heart{top:62px;right:8px}
 
+html{overflow-x:clip}
 /* Popup close controls stay plain, including automatic touch focus. */
 dialog .icon-button,dialog .icon-button:focus,dialog .icon-button:focus-visible{border:0;border-radius:0;outline:0;box-shadow:none;background:transparent;font-size:32px;appearance:none}
 dialog .icon-button:focus-visible{color:var(--deep);text-decoration:underline;text-underline-offset:5px}
