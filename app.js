@@ -140,7 +140,13 @@ swipeArea.addEventListener('pointerdown',e=>{
 swipeArea.addEventListener('pointerup',e=>{
   if(!swipeStart||swipeStart.id!==e.pointerId)return;
   const dx=e.clientX-swipeStart.x,dy=e.clientY-swipeStart.y;swipeStart=null;
-  if(Math.abs(dx)>=45&&Math.abs(dx)>Math.abs(dy)*1.3&&imageContext)openImage(imageContext.slug,imageContext.index+(dx<0?1:-1));
+  if(!imageContext)return;
+  if(Math.abs(dx)>=45&&Math.abs(dx)>Math.abs(dy)*1.3){
+    openImage(imageContext.slug,imageContext.index+(dx<0?1:-1));
+  }else if(Math.abs(dx)<12&&Math.abs(dy)<12){
+    const bounds=swipeArea.getBoundingClientRect();
+    openImage(imageContext.slug,imageContext.index+(e.clientX<bounds.left+bounds.width/2?-1:1));
+  }
 });
 swipeArea.addEventListener('pointercancel',()=>{swipeStart=null;});
 $('#image-dialog').addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();openImage(imageContext.slug,imageContext.index-1);}if(e.key==='ArrowRight'){e.preventDefault();openImage(imageContext.slug,imageContext.index+1);}});
